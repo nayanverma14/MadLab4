@@ -1,7 +1,9 @@
 package com.example.madlab4;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button gen,sort;
     int arr[] = new int[5];
     TextView n1,n2,n3,n4,n5,res;
-    boolean click = false;
+    private static final int MY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putIntArray("Key1", arr);
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent, MY_REQUEST_CODE);
                 }
                 else
                 {
@@ -91,5 +93,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return ch;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == MY_REQUEST_CODE) {
+                {
+                    arr = data.getIntArrayExtra("Sorted");
+                    n1.setText(arr[0] + " ");
+                    n2.setText(arr[1] + " ");
+                    n3.setText(arr[2] + " ");
+                    n4.setText(arr[3] + " ");
+                    n5.setText(arr[4] + " ");
+                    int sum = data.getIntExtra("Sum", 0);
+                    res.setText("SUM : " + sum);
+                }
+            }
+        }
     }
 }

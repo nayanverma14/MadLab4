@@ -58,8 +58,11 @@ public class MainActivity2 extends AppCompatActivity {
         ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity2.this,MainActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra("Sorted",arr);
+                intent.putExtra("Sum",sum);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
